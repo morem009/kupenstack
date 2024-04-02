@@ -1,0 +1,42 @@
+apiVersion: cluster.kupenstack.io/v1alpha1
+kind: OpenStackCloudConfigurationProfile
+metadata:
+  name: occp
+spec:
+  keystone:
+    replicas:
+      api: 1
+  glance:
+    replicas:
+      registry: 1
+      api: 1
+  horizon:
+    disable: true
+    replicas:
+      server: 1
+  nova:
+    replicas:
+      osapi: 1
+      conductor: 1
+    conf:
+      ceph:
+        enabled: false
+      nova:
+        libvirt:
+          virt_type: qemu
+          cpu_mode: none
+  neutron:
+    conf:
+      neutron:
+        DEFAULT:
+          interface_driver: linuxbridge
+      dhcp_agent:
+        DEFAULT:
+          interface_driver: linuxbridge
+      l3_agent:
+        DEFAULT:
+          interface_driver: linuxbridge
+  placement:
+    replicas:
+      api: 1
+
